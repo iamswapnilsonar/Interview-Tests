@@ -1,0 +1,464 @@
+package com.example.assignment.webservice;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+class Animal {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}
+
+class Bird {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}
+
+private class Flag {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}
+
+private class Flower {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}
+
+private class Fruit {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}
+
+public class Response {
+
+	@SerializedName("animals")
+	@Expose
+	private List<Animal> animals = new ArrayList<Animal>();
+	@SerializedName("birds")
+	@Expose
+	private List<Bird> birds = new ArrayList<Bird>();
+	@SerializedName("flags")
+	@Expose
+	private List<Flag> flags = new ArrayList<Flag>();
+	@SerializedName("flowers")
+	@Expose
+	private List<Flower> flowers = new ArrayList<Flower>();
+	@SerializedName("fruits")
+	@Expose
+	private List<Fruit> fruits = new ArrayList<Fruit>();
+	@SerializedName("technology")
+	@Expose
+	private List<Technology> technology = new ArrayList<Technology>();
+	@SerializedName("vegetables")
+	@Expose
+	private List<Vegetable> vegetables = new ArrayList<Vegetable>();
+
+	/**
+	 * 
+	 * @return The animals
+	 */
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+
+	/**
+	 * 
+	 * @param animals
+	 *            The animals
+	 */
+	public void setAnimals(List<Animal> animals) {
+		this.animals = animals;
+	}
+
+	/**
+	 * 
+	 * @return The birds
+	 */
+	public List<Bird> getBirds() {
+		return birds;
+	}
+
+	/**
+	 * 
+	 * @param birds
+	 *            The birds
+	 */
+	public void setBirds(List<Bird> birds) {
+		this.birds = birds;
+	}
+
+	/**
+	 * 
+	 * @return The flags
+	 */
+	public List<Flag> getFlags() {
+		return flags;
+	}
+
+	/**
+	 * 
+	 * @param flags
+	 *            The flags
+	 */
+	public void setFlags(List<Flag> flags) {
+		this.flags = flags;
+	}
+
+	/**
+	 * 
+	 * @return The flowers
+	 */
+	public List<Flower> getFlowers() {
+		return flowers;
+	}
+
+	/**
+	 * 
+	 * @param flowers
+	 *            The flowers
+	 */
+	public void setFlowers(List<Flower> flowers) {
+		this.flowers = flowers;
+	}
+
+	/**
+	 * 
+	 * @return The fruits
+	 */
+	public List<Fruit> getFruits() {
+		return fruits;
+	}
+
+	/**
+	 * 
+	 * @param fruits
+	 *            The fruits
+	 */
+	public void setFruits(List<Fruit> fruits) {
+		this.fruits = fruits;
+	}
+
+	/**
+	 * 
+	 * @return The technology
+	 */
+	public List<Technology> getTechnology() {
+		return technology;
+	}
+
+	/**
+	 * 
+	 * @param technology
+	 *            The technology
+	 */
+	public void setTechnology(List<Technology> technology) {
+		this.technology = technology;
+	}
+
+	/**
+	 * 
+	 * @return The vegetables
+	 */
+	public List<Vegetable> getVegetables() {
+		return vegetables;
+	}
+
+	/**
+	 * 
+	 * @param vegetables
+	 *            The vegetables
+	 */
+	public void setVegetables(List<Vegetable> vegetables) {
+		this.vegetables = vegetables;
+	}
+
+}
+
+private class Technology {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}
+
+private class Vegetable {
+
+	@SerializedName("name")
+	@Expose
+	private String name;
+	@SerializedName("imgURL")
+	@Expose
+	private String imgURL;
+
+	/**
+	 * 
+	 * @return The name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return The imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	/**
+	 * 
+	 * @param imgURL
+	 *            The imgURL
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
+	}
+
+}

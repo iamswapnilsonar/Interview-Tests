@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Swapnil Sonar" />
+
+    <com.example.assignment.commans.HorizontalListView
+        android:id="@+id/horizonListView"
+        android:layout_width="fill_parent"
+        android:layout_height="100dip"
+        android:background="#ddd" />
+
+</LinearLayout>
