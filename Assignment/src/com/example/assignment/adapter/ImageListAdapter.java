@@ -5,12 +5,15 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.assignment.R;
+import com.example.assignment.commans.IMethodCaller;
 import com.example.assignment.model.Element;
+import com.example.assignment.webservice.RestClient;
 import com.squareup.picasso.Picasso;
 
 public class ImageListAdapter extends BaseAdapter {
@@ -35,9 +38,9 @@ public class ImageListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Element getItem(int position) {
 		// TODO Auto-generated method stub
-		return null;
+		return dataList.get(position);
 	}
 
 	@Override
@@ -69,12 +72,26 @@ public class ImageListAdapter extends BaseAdapter {
 			rowView = convertView;
 		}
 
-		Element response = dataList.get(position);
-		Picasso.with(mContext).load(response.getImgURL()).into(holder.image);
+		final Element response = dataList.get(position);
 		
-//		int ResId = context.getResources().getIdentifier(
-//				dataList.get(position), "drawable", context.getPackageName());
-//		holder.image.setBackgroundResource(ResId);
+		String imageURL = RestClient.BASE_URL + "/" + response.getImgURL();
+		Picasso.with(mContext).load(imageURL)
+		.centerCrop()
+		.placeholder(R.drawable.ic_launcher)
+		.resize(120, 120)
+		.error(R.drawable.ic_launcher)
+		.into(holder.image);
+		
+		holder.image.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(mContext instanceof IMethodCaller){
+		            ((IMethodCaller)mContext).refreshSelectedImage(response);
+		        }
+			}
+		});
 
 		return rowView;
 	}
@@ -84,3 +101,4 @@ public class ImageListAdapter extends BaseAdapter {
 		ImageView image;
 	}
 }
+

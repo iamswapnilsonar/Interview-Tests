@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Swapnil Sonar" />
 
-    <ccom.example.assignment.ui.HorizontalListView
+    <com.example.assignment.ui.HorizontalListView
         android:id="@+id/horizonListView"
         android:layout_width="fill_parent"
         android:layout_height="100dip"

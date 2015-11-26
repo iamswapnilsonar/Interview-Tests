@@ -18,9 +18,11 @@ import android.widget.ListView;
 
 import com.example.assignment.adapter.CategoryListAdapter;
 import com.example.assignment.commans.AssignApplication;
+import com.example.assignment.commans.IMethodCaller;
 import com.example.assignment.model.Category;
 import com.example.assignment.model.Element;
 import com.example.assignment.webservice.Response;
+import com.example.assignment.webservice.RestClient;
 import com.example.assignment.webservice.response_model.Animal;
 import com.example.assignment.webservice.response_model.Bird;
 import com.example.assignment.webservice.response_model.Flag;
@@ -28,8 +30,9 @@ import com.example.assignment.webservice.response_model.Flower;
 import com.example.assignment.webservice.response_model.Fruit;
 import com.example.assignment.webservice.response_model.Technology;
 import com.example.assignment.webservice.response_model.Vegetable;
+import com.squareup.picasso.Picasso;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener, IMethodCaller{
 
 	private Context mContext;
 
@@ -39,8 +42,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private HashMap<String, List<Response>> map = new HashMap<String, List<Response>>();
 	private CategoryListAdapter categoryListAdapter;
-	
-	private List<Response> apiResponseList = new ArrayList<Response>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +95,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			AssignApplication.getRestClient().getRestInterface().getInfo(new retrofit.Callback<Response>() {
 				
-				@SuppressWarnings("unused")
 				@Override
 				public void success(Response apiResponse, retrofit.client.Response retrofitSuccess) {
 					// TODO Auto-generated method stub
+					
+					mListCategories.clear();
+					categoryListAdapter.notifyDataSetChanged();
 					
 					// ANIMAL 
 					List<Element> mList = new ArrayList<Element>();
@@ -107,7 +110,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					mListCategories.add(new Category("Animal", mList.size(), mList));
 					
 					// BIRD 
-					mList.clear();
+					mList = new ArrayList<Element>();
 					for (Bird bird : apiResponse.getBirds()) {
 						Element element = new Element(bird.getName(), bird.getImgURL());
 						mList.add(element);
@@ -115,7 +118,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					mListCategories.add(new Category("Bird", mList.size(), mList));
 					
 					// FLAG 
-					mList.clear();
+					mList = new ArrayList<Element>();
 					for (Flag flag : apiResponse.getFlags()) {
 						Element element = new Element(flag.getName(), flag.getImgURL());
 						mList.add(element);
@@ -123,7 +126,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					mListCategories.add(new Category("Flag", mList.size(), mList));
 					
 					// FLOWER 
-					mList.clear();
+					mList = new ArrayList<Element>();
 					for (Flower flower : apiResponse.getFlowers()) {
 						Element element = new Element(flower.getName(), flower.getImgURL());
 						mList.add(element);
@@ -131,7 +134,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					mListCategories.add(new Category("Flower", mList.size(), mList));
 					
 					// FRUIT 
-					mList.clear();
+					mList = new ArrayList<Element>();
 					for (Fruit fruit : apiResponse.getFruits()) {
 						Element element = new Element(fruit.getName(), fruit.getImgURL());
 						mList.add(element);
@@ -139,7 +142,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					mListCategories.add(new Category("Fruit", mList.size(), mList));
 					
 					// TECHNOLOGY 
-					mList.clear();
+					mList = new ArrayList<Element>();
 					for (Technology technology : apiResponse.getTechnology()) {
 						Element element = new Element(technology.getName(), technology.getImgURL());
 						mList.add(element);
@@ -147,7 +150,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					mListCategories.add(new Category("Technology", mList.size(), mList));
 					
 					// VEGETABLES 
-					mList.clear();
+					mList = new ArrayList<Element>();
 					for (Vegetable vegetable : apiResponse.getVegetables()) {
 						Element element = new Element(vegetable.getName(), vegetable.getImgURL());
 						mList.add(element);
@@ -218,4 +221,17 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
+
+	@Override
+	public void refreshSelectedImage(Element element) {
+		// TODO Auto-generated method stub
+		String imageURL = RestClient.BASE_URL + "/" + element.getImgURL();
+		Picasso.with(mContext).load(imageURL)
+		.centerCrop()
+		.placeholder(R.drawable.ic_launcher)
+		.resize(200, 200)
+		.error(R.drawable.ic_launcher)
+		.into(ivSelected);
+	}
 }
+
