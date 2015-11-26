@@ -9,7 +9,9 @@
         android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Swapnil Sonar" />
+        android:padding="10dp"
+        android:text="Swapnil Sonar"
+        android:textStyle="bold" />
 
     <com.example.assignment.ui.HorizontalListView
         android:id="@+id/horizonListView"

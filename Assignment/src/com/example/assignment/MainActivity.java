@@ -1,7 +1,6 @@
 package com.example.assignment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit.RetrofitError;
@@ -15,10 +14,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.assignment.adapter.CategoryListAdapter;
 import com.example.assignment.commans.AssignApplication;
 import com.example.assignment.commans.IMethodCaller;
+import com.example.assignment.methods.CheckInternetUtil;
 import com.example.assignment.model.Category;
 import com.example.assignment.model.Element;
 import com.example.assignment.webservice.Response;
@@ -36,12 +37,12 @@ public class MainActivity extends Activity implements OnClickListener, IMethodCa
 
 	private Context mContext;
 
-	private Button btnGetData;
+	private Button btnTryAgain;
 	private ImageView ivSelected;
 	private ListView listview;
 
-	private HashMap<String, List<Response>> map = new HashMap<String, List<Response>>();
 	private CategoryListAdapter categoryListAdapter;
+	private RelativeLayout relContainer, relConnectivity;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +56,117 @@ public class MainActivity extends Activity implements OnClickListener, IMethodCa
 	private void initUI() {
 		// TODO Auto-generated method stub
 
-		btnGetData = (Button) findViewById(R.id.btnGetData);
 		ivSelected = (ImageView) findViewById(R.id.ivSelected);
 	
 		listview = (ListView) findViewById(R.id.listview);
 		categoryListAdapter = new CategoryListAdapter(mContext, mListCategories);
 		listview.setAdapter(categoryListAdapter);
 		
-		btnGetData.setOnClickListener(this);
+		relContainer = (RelativeLayout) findViewById(R.id.relContainer);
+		relConnectivity = (RelativeLayout) findViewById(R.id.relConnectivity);
+		
+		btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
+		btnTryAgain.setOnClickListener(this);
+		
+		tryAgainForConnectivity();
+		
 	}
 
+	private void tryAgainForConnectivity() {
+		
+		if (CheckInternetUtil.isNetAvailable(mContext)) {
+			relConnectivity.setVisibility(View.GONE);
+			relContainer.setVisibility(View.VISIBLE);
+			loadAndPrepareScreen();
+		}else{
+			relConnectivity.setVisibility(View.VISIBLE);
+			relContainer.setVisibility(View.GONE);
+		}
+		
+	}
+	
+	/**
+	 * API consumption and info loading..
+	 * @author Swapnil Sonar
+	 */
+	private void loadAndPrepareScreen() {
+		
+		AssignApplication.getRestClient().getRestInterface().getInfo(new retrofit.Callback<Response>() {
+			
+			@Override
+			public void success(Response apiResponse, retrofit.client.Response retrofitSuccess) {
+				// TODO Auto-generated method stub
+				
+				mListCategories.clear();
+				categoryListAdapter.notifyDataSetChanged();
+				
+				// ANIMAL 
+				List<Element> mList = new ArrayList<Element>();
+				for (Animal animal : apiResponse.getAnimals()) {
+					mList.add(new Element(animal.getName(), animal.getImgURL()));
+				}
+				mListCategories.add(new Category("Animal", mList.size(), mList));
+				
+				// BIRD 
+				mList = new ArrayList<Element>();
+				for (Bird bird : apiResponse.getBirds()) {
+					Element element = new Element(bird.getName(), bird.getImgURL());
+					mList.add(element);
+				}
+				mListCategories.add(new Category("Bird", mList.size(), mList));
+				
+				// FLAG 
+				mList = new ArrayList<Element>();
+				for (Flag flag : apiResponse.getFlags()) {
+					Element element = new Element(flag.getName(), flag.getImgURL());
+					mList.add(element);
+				}
+				mListCategories.add(new Category("Flag", mList.size(), mList));
+				
+				// FLOWER 
+				mList = new ArrayList<Element>();
+				for (Flower flower : apiResponse.getFlowers()) {
+					Element element = new Element(flower.getName(), flower.getImgURL());
+					mList.add(element);
+				}
+				mListCategories.add(new Category("Flower", mList.size(), mList));
+				
+				// FRUIT 
+				mList = new ArrayList<Element>();
+				for (Fruit fruit : apiResponse.getFruits()) {
+					Element element = new Element(fruit.getName(), fruit.getImgURL());
+					mList.add(element);
+				}
+				mListCategories.add(new Category("Fruit", mList.size(), mList));
+				
+				// TECHNOLOGY 
+				mList = new ArrayList<Element>();
+				for (Technology technology : apiResponse.getTechnology()) {
+					Element element = new Element(technology.getName(), technology.getImgURL());
+					mList.add(element);
+				}
+				mListCategories.add(new Category("Technology", mList.size(), mList));
+				
+				// VEGETABLES 
+				mList = new ArrayList<Element>();
+				for (Vegetable vegetable : apiResponse.getVegetables()) {
+					Element element = new Element(vegetable.getName(), vegetable.getImgURL());
+					mList.add(element);
+				}
+				mListCategories.add(new Category("Vegetable", mList.size(), mList));
+				
+				categoryListAdapter.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void failure(RetrofitError retrofitError) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -91,130 +193,8 @@ public class MainActivity extends Activity implements OnClickListener, IMethodCa
 		// TODO Auto-generated method stub
 		int key = v.getId();
 		switch (key) {
-		case R.id.btnGetData:
-			
-			AssignApplication.getRestClient().getRestInterface().getInfo(new retrofit.Callback<Response>() {
-				
-				@Override
-				public void success(Response apiResponse, retrofit.client.Response retrofitSuccess) {
-					// TODO Auto-generated method stub
-					
-					mListCategories.clear();
-					categoryListAdapter.notifyDataSetChanged();
-					
-					// ANIMAL 
-					List<Element> mList = new ArrayList<Element>();
-					for (Animal animal : apiResponse.getAnimals()) {
-						mList.add(new Element(animal.getName(), animal.getImgURL()));
-					}
-					mListCategories.add(new Category("Animal", mList.size(), mList));
-					
-					// BIRD 
-					mList = new ArrayList<Element>();
-					for (Bird bird : apiResponse.getBirds()) {
-						Element element = new Element(bird.getName(), bird.getImgURL());
-						mList.add(element);
-					}
-					mListCategories.add(new Category("Bird", mList.size(), mList));
-					
-					// FLAG 
-					mList = new ArrayList<Element>();
-					for (Flag flag : apiResponse.getFlags()) {
-						Element element = new Element(flag.getName(), flag.getImgURL());
-						mList.add(element);
-					}
-					mListCategories.add(new Category("Flag", mList.size(), mList));
-					
-					// FLOWER 
-					mList = new ArrayList<Element>();
-					for (Flower flower : apiResponse.getFlowers()) {
-						Element element = new Element(flower.getName(), flower.getImgURL());
-						mList.add(element);
-					}
-					mListCategories.add(new Category("Flower", mList.size(), mList));
-					
-					// FRUIT 
-					mList = new ArrayList<Element>();
-					for (Fruit fruit : apiResponse.getFruits()) {
-						Element element = new Element(fruit.getName(), fruit.getImgURL());
-						mList.add(element);
-					}
-					mListCategories.add(new Category("Fruit", mList.size(), mList));
-					
-					// TECHNOLOGY 
-					mList = new ArrayList<Element>();
-					for (Technology technology : apiResponse.getTechnology()) {
-						Element element = new Element(technology.getName(), technology.getImgURL());
-						mList.add(element);
-					}
-					mListCategories.add(new Category("Technology", mList.size(), mList));
-					
-					// VEGETABLES 
-					mList = new ArrayList<Element>();
-					for (Vegetable vegetable : apiResponse.getVegetables()) {
-						Element element = new Element(vegetable.getName(), vegetable.getImgURL());
-						mList.add(element);
-					}
-					mListCategories.add(new Category("Vegetable", mList.size(), mList));
-					
-					categoryListAdapter.notifyDataSetChanged();
-				}
-				
-				@Override
-				public void failure(RetrofitError retrofitError) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
-//			AssignApplication.getRestClient().getRestInterface().getWheatherReport(new Callback<List<Response>>() {
-//				
-//				@Override
-//				public void success(List<Response> apiResponse, retrofit.client.Response sucess) {
-//					// TODO Auto-generated method stub
-//					
-////					apiResponseList.clear();
-////					apiResponseList.addAll(apiResponse);
-////					categoryListAdapter.notifyDataSetChanged();
-//					
-//					mListCategories.clear();
-//					categoryListAdapter.notifyDataSetChanged();
-//					
-//					Set<String> set = new HashSet<String>();
-//					for (Response object : apiResponse) {
-//						set.add(object.getCategory());
-//					}
-//					
-//					Iterator<String> iter = set.iterator();
-//					while (iter.hasNext()) {
-//					    
-//						String category = iter.next();
-//						List<Response> mList = new ArrayList<Response>();
-//						
-//						for (int i = 0; i < apiResponse.size(); i++) {
-//							Response response = apiResponse.get(i);
-//							if (category.equalsIgnoreCase(response.getCategory())) {
-//								mList.add(response);
-//							}
-//							
-//						}
-//						
-//						map.put(category, mList);
-//						
-//						Category cat = new Category(category, mList.size(), mList);
-//						mListCategories.add(cat);
-//						
-//					}
-//					
-//					categoryListAdapter.notifyDataSetChanged();
-//				}
-//				
-//				@Override
-//				public void failure(RetrofitError error) {
-//					// TODO Auto-generated method stub
-////					Toast.makeText(mContext, error., duration)
-//				}
-//			});
+		case R.id.btnTryAgain:
+			tryAgainForConnectivity();
 			break;
 
 		default:

@@ -78,7 +78,7 @@ public class ImageListAdapter extends BaseAdapter {
 		Picasso.with(mContext).load(imageURL)
 		.centerCrop()
 		.placeholder(R.drawable.ic_launcher)
-		.resize(120, 120)
+		.resize(200, 200)
 		.error(R.drawable.ic_launcher)
 		.into(holder.image);
 		
